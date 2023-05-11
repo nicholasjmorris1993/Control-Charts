@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 from plotly.offline import plot
 import sys
 sys.path.append("/home/nick/Control-Charts/src")
-from ewma import EWMA
+from imr import IMR
 
 
 def control_chart(df, x, y, center, lower, upper, title="Control Chart", font_size=None):
@@ -19,14 +19,24 @@ def control_chart(df, x, y, center, lower, upper, title="Control Chart", font_si
 
 data = pd.read_csv("/home/nick/Control-Charts/test/traffic.txt", sep="\t")
 
-df = EWMA(x=data["Vehicles"].tolist(), alpha=0.1)
+df = IMR(x=data["Vehicles"].tolist())
 
 control_chart(
     df, 
     x="Observation", 
-    y="EWMA", 
-    center="EWMA CL",
-    lower="EWMA LCL",
-    upper="EWMA UCL",
-    title="EWMA Chart",
+    y="I", 
+    center="I CL",
+    lower="I LCL",
+    upper="I UCL",
+    title="I Chart",
+)
+
+control_chart(
+    df, 
+    x="Observation", 
+    y="MR", 
+    center="MR CL",
+    lower="MR LCL",
+    upper="MR UCL",
+    title="MR Chart",
 )
